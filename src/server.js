@@ -2,6 +2,11 @@
 // Including Packages			
 // ---------------------------------- //
 
+// Import database and sync tables
+const { sequelize } = require("./db/connection");
+const syncTables = async () => { await sequelize.sync(); }
+syncTables();
+
 // Framework
 const express = require('express');
 const app = express();

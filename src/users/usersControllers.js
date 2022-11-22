@@ -1,5 +1,5 @@
 const { response } = require("express");
-const User = require("./userModels");
+const User = require("./usersModels");
 
 // Create new user
 exports.createUser = async (request, response) => {
@@ -17,7 +17,7 @@ exports.createUser = async (request, response) => {
 // Get a list of the users 
 exports.readUsers = async (request, response) => {
   try {
-    const usersList = await User.find({})
+    const usersList = await User.findAll({})
     console.log(usersList)
     response.status(200).send({user: usersList})
   } catch (error) {
