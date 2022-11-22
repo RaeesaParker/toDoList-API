@@ -1,0 +1,28 @@
+{
+  "name": "to-do-list-api",
+  "version": "1.0.0",
+  "description": "Express backend for React to do list front. Connected to SQL db",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RaeesaParker/toDoList-API.git"
+  },
+  "author": "Raeesa Parker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RaeesaParker/toDoList-API/issues"
+  },
+  "homepage": "https://github.com/RaeesaParker/toDoList-API#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^2.3.0",
+    "nodemon": "^2.0.20",
+    "pg": "^8.8.0"
+  }
+}
