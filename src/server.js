@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 // Routing
-const userRouter = require('./users/userRoutes')
+const userRouter = require('./users/usersRoutes')
 app.use(userRouter);
 
 
