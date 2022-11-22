@@ -1,5 +1,5 @@
 const { Router } = require ("express");
-const { createUser, readUsers } = require("./usersControllers");
+const { createUser, readUsers, deleteUser } = require("./usersControllers");
 
 
 // User router
@@ -10,5 +10,8 @@ userRouter.post('/addUser', createUser);
 
 // Get all users
 userRouter.get('/readUsers', readUsers)
+
+// Delete User
+userRouter.delete('/deleteUser', deleteUser)
 
 module.exports = userRouter;

@@ -6,7 +6,7 @@ exports.createUser = async (request, response) => {
   try {
     const newUser = await User.create(request.body);
     console.log("Successfully created new user", newUser);
-    response.status(201).send({ user: newUser.username, token });
+    response.status(201).send({ user: newUser.username });
   } catch (error) {
     console.log(error);
     response.status(500).send({error: error.message});
@@ -23,5 +23,19 @@ exports.readUsers = async (request, response) => {
   } catch (error) {
     console.log(error);
     response.status(500).send({error: error.message});
+  }
+};
+
+
+// Delete User
+exports.deleteUser = async (request, response) => {
+  try {
+      await User.destroy({
+        where: {username: request.body.username}
+      })
+      response.status(200).send({message: "successfully deleted a user"})
+  } catch (error) {
+      console.log(error);
+      response.status(500).send({error: error.message});
   }
 }
