@@ -27,13 +27,43 @@ exports.readUsers = async (request, response) => {
 };
 
 
+// Get one user
+exports.readOneUser = async (request, response) => {
+  try {
+    const usersList = await User.findOne({
+      where: {user_id: request.params.id}
+    })
+    response.status(200).send({user: usersList})
+  } catch (error) {
+    console.log(error);
+    response.status(500).send({error: error.message});
+  }
+};
+
+
 // Delete User
 exports.deleteUser = async (request, response) => {
   try {
       await User.destroy({
-        where: {username: request.body.username}
+        where: {user_id: request.params.id}
       })
       response.status(200).send({message: "successfully deleted a user"})
+  } catch (error) {
+      console.log(error);
+      response.status(500).send({error: error.message});
+  }
+}
+
+// Update User
+exports.updateUser = async (request, response) => {
+  try {
+      await User.update(
+          {[request.body.key]: request.body.value},
+          { where: 
+            {username: request.body.username }
+          }
+      );
+      response.status(200).send({message: "User field has been updated"})
   } catch (error) {
       console.log(error);
       response.status(500).send({error: error.message});
