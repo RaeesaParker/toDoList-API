@@ -1,12 +1,15 @@
 const { response } = require("express");
 const User = require("./usersModels");
+const jwt = require('jsonwebtoken')
 
-// Create new user
+
+// Create new user => Create token
 exports.createUser = async (request, response) => {
   try {
     const newUser = await User.create(request.body);
+    const token = await jwt.sign({user_id: newUser.user_id}, process.env.SECRET)
     console.log("Successfully created new user", newUser);
-    response.status(201).send({ user: newUser.username });
+    response.status(201).send({ user: newUser.username, token});
   } catch (error) {
     console.log(error);
     response.status(500).send({error: error.message});
