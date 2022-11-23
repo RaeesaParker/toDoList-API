@@ -1,12 +1,13 @@
 const { Router } = require ("express");
 const { createUser, readUsers, readOneUser, deleteUser, updateUser } = require("./usersControllers");
+const { hashPass } = require("../middleware/index")
 
 
 // User router
 const userRouter = Router();
 
 // Create User
-userRouter.post('/addUser', createUser);
+userRouter.post('/addUser', hashPass, createUser);
 
 // Get all users
 userRouter.get('/users', readUsers)
