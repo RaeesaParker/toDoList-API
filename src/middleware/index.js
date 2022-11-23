@@ -5,6 +5,7 @@ const User = require('../users/usersModels')
 // Set Salt Rounds
 let saltRounds = 10;
 
+
 // Hash password and set request.body.password to hashed
 exports.hashPass = async (request, response, next) => {
   try {
@@ -40,5 +41,27 @@ exports.comparePass = async(request, response, next) => {
   } catch (error) {
       console.log(error)
       response.status(500).send({error: error.message})
+  }
+}
+
+
+// Set Token Checking
+exports.tokenCheck = async(request, response, next) => {
+  try {
+      if (request.header("Authorization")){
+          const token = request.header("Authorization").replace("Bearer ", "")
+          const decodedToken = await jwt.verify( token, process.env.SECRET )
+          const user = await User.findOne({
+            where : {user_id:decodedToken.user_id}
+          })
+          request.authUser = user
+          console.log("Headers passed")
+      }else{
+          console.log("No headers passed")
+      }
+      next()
+  } catch (error) {
+      console.log(error)
+      response.status(500).send({error: error.message}) 
   }
 }
