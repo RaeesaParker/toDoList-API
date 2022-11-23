@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const User = require('../users/userModels')
+const User = require('../users/usersModels')
 
 // Set Salt Rounds
 let saltRounds = 10;
 
-// Hash passwords
+// Hash password and set request.body.password to hashed
 exports.hashPass = async (request, response, next) => {
   try {
       request.body.password = await bcrypt.hash(request.body.password, saltRounds)
