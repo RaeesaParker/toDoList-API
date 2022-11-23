@@ -57,10 +57,11 @@ exports.deleteUser = async (request, response) => {
 // Update User
 exports.updateUser = async (request, response) => {
   try {
+    console.log(request.body)
       await User.update(
-          {[request.body.key]: request.body.value},
+          request.body,
           { where: 
-            {username: request.body.username }
+            { user_id: request.params.id }
           }
       );
       response.status(200).send({message: "User field has been updated"})
