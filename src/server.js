@@ -16,7 +16,9 @@ app.use(express.json());
 
 // Routing
 const userRouter = require('./users/usersRoutes')
-app.use(userRouter);
+const loginRouter = require('./login/loginRoutes')
+app.use(userRouter, loginRouter);
+
 
 // Set up port
 const port = process.env.PORT || 5001;

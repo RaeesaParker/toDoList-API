@@ -18,7 +18,6 @@ exports.createUser = async (request, response) => {
 exports.readUsers = async (request, response) => {
   try {
     const usersList = await User.findAll({})
-    console.log(usersList)
     response.status(200).send({user: usersList})
   } catch (error) {
     console.log(error);
@@ -33,7 +32,7 @@ exports.readOneUser = async (request, response) => {
     const usersList = await User.findOne({
       where: {user_id: request.params.id}
     })
-    response.status(200).send({user: usersList})
+    response.status(200).send({username: usersList.username, email:usersList.email })
   } catch (error) {
     console.log(error);
     response.status(500).send({error: error.message});
@@ -57,7 +56,6 @@ exports.deleteUser = async (request, response) => {
 // Update User
 exports.updateUser = async (request, response) => {
   try {
-    console.log(request.body)
       await User.update(
           request.body,
           { where: 
