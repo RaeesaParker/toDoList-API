@@ -19,7 +19,7 @@ userRouter.get('/users/:id', readOneUser)
 userRouter.delete('/users/:id', deleteUser)
 
 // Update User details
-userRouter.put('/users/:id',updateUser) 
+userRouter.put('/users/:id', hashPass, updateUser) 
 
 
 module.exports = userRouter;

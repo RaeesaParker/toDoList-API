@@ -57,7 +57,6 @@ exports.deleteUser = async (request, response) => {
 // Update User
 exports.updateUser = async (request, response) => {
   try {
-    console.log(request.body)
       await User.update(
           request.body,
           { where: 
