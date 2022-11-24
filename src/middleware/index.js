@@ -76,23 +76,3 @@ exports.tokenCheck = async(request, response, next) => {
       response.status(500).send({error: error.message}) 
   }
 }
-
-// Check that the token matches the request username
-exports.tokenRequestCompare  = async(request, response, next) => {
-  try {
-    // If user has passed the token check => compare to body username => compare passwords to throw error
-    if(request.authUser){
-
-      if (request.authUser.username == request.body.username){
-        next()
-      }else{
-        throw new Error("Incorrect username or password")
-      }
-    }else{
-      next()
-    }
-  } catch (error) {
-    console.log(error)
-    response.status(500).send({error: error.message}) 
-  }
-}
