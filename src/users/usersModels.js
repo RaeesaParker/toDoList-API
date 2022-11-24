@@ -1,6 +1,8 @@
 // Use sequelize db connection 
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
+const Project = require("../projects/projectsModels");
+
 
 const User =sequelize.define("User", 
   {
@@ -23,5 +25,9 @@ const User =sequelize.define("User",
   },
   {timestamps:false}
 ); 
+
+User.hasMany(Project);
+Project.belongsTo(User);
+
 
 module.exports = User;

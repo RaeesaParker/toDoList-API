@@ -2,6 +2,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
 
+
 const Project =sequelize.define("Project", 
   {
     project_id:{
@@ -12,11 +13,13 @@ const Project =sequelize.define("Project",
     projectName : {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
+      require: true
     },
     themeName: {
       type: DataTypes.STRING,
-      require: true
+      require: true,
+      defaultValue: "yellow"
     }
   },
   {timestamps:false}
