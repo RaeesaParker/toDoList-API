@@ -39,7 +39,7 @@ exports.createProject = async (request, response) => {
 };
 
 
-// Get a list of the users 
+// Get a list of the projects 
 exports.readProjects = async (request, response) => {
   try {
     const projectsList = await Project.findAll({})
@@ -81,7 +81,7 @@ exports.readUserProjects = async (request, response) => {
 };
 
 
-// Delete User
+// Delete Project
 exports.deleteProject = async (request, response) => {
   try {
       await Project.destroy({

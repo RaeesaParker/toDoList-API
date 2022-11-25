@@ -16,10 +16,10 @@ projectRouter.get('/projects', readProjects)
 // Get one project
 projectRouter.get('/projects/:id', readOneProject)
 
-// Get all projects of a user
+// Get all projects of a project
 projectRouter.get('/user/:id/projects', tokenCheck,  readUserProjects)
 
-// Delete User
+// Delete Project
 projectRouter.delete('/projects/:id', deleteProject)
 
 
