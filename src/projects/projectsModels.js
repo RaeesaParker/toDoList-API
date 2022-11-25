@@ -1,33 +1,28 @@
 // Use sequelize db connection 
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
-const Project = require("../projects/projectsModels");
+const User = require("../users/usersModels");
 
 
-const User =sequelize.define("User", 
+const Project =sequelize.define("Project", 
   {
     id:{
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
-    username : {
+    projectName : {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      require: true
     },
-    email: {
+    themeName: {
       type: DataTypes.STRING,
-    },
-    password: {
-      type: DataTypes.STRING
+      require: true,
+      defaultValue: "yellow"
     }
   },
   {timestamps:false}
 ); 
 
-User.hasMany(Project);
-Project.belongsTo(User );
-
-
-module.exports = User;
+module.exports = Project;

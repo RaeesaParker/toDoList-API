@@ -60,9 +60,9 @@ exports.tokenCheck = async(request, response, next) => {
       if (request.header("Authorization")){
           const token = request.header("Authorization").replace("Bearer ", "")
           const decodedToken = await jwt.verify( token, process.env.SECRET )
-
+          console.log(decodedToken)
           const user = await User.findOne({
-            where : {user_id:decodedToken.user_id}
+            where : {id:decodedToken.id}
           })
 
           request.authUser = user
