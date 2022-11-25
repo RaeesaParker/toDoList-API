@@ -1,6 +1,7 @@
 const { response } = require("express");
 const User = require("./usersModels");
 const Project = require('../projects/projectsModels')
+const Note = require("../notes/notesModels");
 const jwt = require('jsonwebtoken')
 
 
@@ -23,9 +24,10 @@ exports.readUsers = async (request, response) => {
   try {
     const usersList = await User.findAll({
       attributes:[ "id", "username", "email" ], 
-      include:{ model:Project, 
-        attributes:["id", "projectName", "themeName"]
-      }
+      include:[ 
+        { model:Project, attributes:["id", "projectName", "themeName"] }, 
+        { model:Note, attributes:["id", "noteTitle", "noteContent"] } 
+      ]
     })
     response.status(200).send({user: usersList})
   } catch (error) {

@@ -1,7 +1,6 @@
 const { response } = require("express");
 const Project = require("./projectsModels");
 const User = require("../users/usersModels");
-const { Model } = require("sequelize");
 
 // Create new project
 exports.createProject = async (request, response) => {

@@ -16,6 +16,7 @@ noteRouter.get('/notes',  readNotes );
 // Delete Note
 noteRouter.delete('/notes/:id', deleteNote)
 
+
 // Move Note Between Sections => Update Bin Value on Note 
 
 
