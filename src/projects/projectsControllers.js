@@ -1,6 +1,7 @@
 const { response } = require("express");
 const Project = require("./projectsModels");
 const User = require("../users/usersModels");
+const Note = require('../notes/notesModels')
 
 // Create new project
 exports.createProject = async (request, response) => {
@@ -41,7 +42,13 @@ exports.createProject = async (request, response) => {
 // Get a list of the projects 
 exports.readProjects = async (request, response) => {
   try {
-    const projectsList = await Project.findAll({})
+    const projectsList = await Project.findAll({
+      attributes:[ "id", "projectName", "themeName", "UserId" ], 
+      include:[ 
+        { model:Note, attributes:["id", "noteTitle", "noteContent"] } 
+      ]})
+
+
     response.status(200).send({project: projectsList})
   } catch (error) {
     console.log(error);
