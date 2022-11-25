@@ -2,6 +2,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
 const Project = require("../projects/projectsModels");
+const Note = require("../notes/notesModels");
 
 
 const User =sequelize.define("User", 
@@ -26,8 +27,13 @@ const User =sequelize.define("User",
   {timestamps:false}
 ); 
 
+// Set up foreign key between user and projects
 User.hasMany(Project);
-Project.belongsTo(User );
+Project.belongsTo(User);
+
+// Set up foreign key between user and notes
+User.hasMany(Note);
+Note.belongsTo(User);
 
 
 module.exports = User;
