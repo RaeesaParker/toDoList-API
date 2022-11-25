@@ -17,7 +17,8 @@ app.use(express.json());
 // Routing
 const userRouter = require('./users/usersRoutes')
 const loginRouter = require('./login/loginRoutes')
-app.use(userRouter, loginRouter);
+const projectRouter = require('./projects/projectsRoutes')
+app.use(userRouter, loginRouter, projectRouter);
 
 
 // Set up port

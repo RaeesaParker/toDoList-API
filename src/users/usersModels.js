@@ -6,7 +6,7 @@ const Project = require("../projects/projectsModels");
 
 const User =sequelize.define("User", 
   {
-    user_id:{
+    id:{
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
@@ -27,7 +27,7 @@ const User =sequelize.define("User",
 ); 
 
 User.hasMany(Project);
-Project.belongsTo(User);
+Project.belongsTo(User );
 
 
 module.exports = User;

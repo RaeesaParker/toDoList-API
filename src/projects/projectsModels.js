@@ -1,11 +1,12 @@
 // Use sequelize db connection 
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
+const User = require("../users/usersModels");
 
 
 const Project =sequelize.define("Project", 
   {
-    project_id:{
+    id:{
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
@@ -13,7 +14,6 @@ const Project =sequelize.define("Project",
     projectName : {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       require: true
     },
     themeName: {

@@ -1,5 +1,6 @@
 const { response } = require("express");
 const User = require("./usersModels");
+const Project = require('../projects/projectsModels')
 const jwt = require('jsonwebtoken')
 
 
@@ -7,7 +8,7 @@ const jwt = require('jsonwebtoken')
 exports.createUser = async (request, response) => {
   try {
     const newUser = await User.create(request.body);
-    const token = await jwt.sign({user_id: newUser.user_id}, process.env.SECRET)
+    const token = await jwt.sign({id: newUser.id}, process.env.SECRET)
     console.log("Successfully created new user", newUser);
     response.status(201).send({ user: newUser.username, token});
   } catch (error) {
@@ -20,7 +21,12 @@ exports.createUser = async (request, response) => {
 // Get a list of the users 
 exports.readUsers = async (request, response) => {
   try {
-    const usersList = await User.findAll({})
+    const usersList = await User.findAll({
+      attributes:[ "id", "username", "email" ], 
+      include:{ model:Project, 
+        attributes:["id", "projectName", "themeName"]
+      }
+    })
     response.status(200).send({user: usersList})
   } catch (error) {
     console.log(error);
@@ -33,7 +39,7 @@ exports.readUsers = async (request, response) => {
 exports.readOneUser = async (request, response) => {
   try {
     const usersList = await User.findOne({
-      where: {user_id: request.params.id}
+      where: {id: request.params.id}
     })
     response.status(200).send({username: usersList.username, email:usersList.email })
   } catch (error) {
@@ -47,7 +53,7 @@ exports.readOneUser = async (request, response) => {
 exports.deleteUser = async (request, response) => {
   try {
       await User.destroy({
-        where: {user_id: request.params.id}
+        where: {id: request.params.id}
       })
       response.status(200).send({message: "successfully deleted a user"})
   } catch (error) {
@@ -62,7 +68,7 @@ exports.updateUser = async (request, response) => {
       await User.update(
           request.body,
           { where: 
-            { user_id: request.params.id }
+            { id: request.params.id }
           }
       );
       response.status(200).send({message: "User field has been updated"})
