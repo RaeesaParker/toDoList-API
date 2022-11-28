@@ -27,7 +27,7 @@ const Project =sequelize.define("Project",
 
 
 // Set up foreign key between user and projects
-Project.hasMany(Note);
+Project.hasMany(Note, {onDelete: "CASCADE", onUpdate:"CASCADE"});
 Note.belongsTo(Project);
 
 

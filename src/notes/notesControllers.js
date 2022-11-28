@@ -35,18 +35,6 @@ exports.createNote = async (request, response) => {
       return 
     }
 
-    // Attach userid to note => Find the user using the ID as the PK => Include the note 
-    let loadedUser = await User.findByPk(request.body.userId, {include: Note})
-
-    // Check we have loaded the user 
-    if (!loadedUser){
-      response.status(500).send({error: "User not loaded"});
-      return 
-    }
-
-    // Add the project to the user 
-    loadedUser.addNote(newNote)
-
     // Attach projectid to note => Find the project using the ID as the PK => Include the note 
     let loadedProject = await Project.findByPk(request.body.projectId, {include: Note})
 

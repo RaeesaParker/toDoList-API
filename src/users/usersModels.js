@@ -28,12 +28,8 @@ const User =sequelize.define("User",
 ); 
 
 // Set up foreign key between user and projects
-User.hasMany(Project);
+User.hasMany(Project, {onDelete: "CASCADE", onUpdate:"CASCADE"});
 Project.belongsTo(User);
-
-// Set up foreign key between user and notes
-User.hasMany(Note);
-Note.belongsTo(User);
 
 
 module.exports = User;
