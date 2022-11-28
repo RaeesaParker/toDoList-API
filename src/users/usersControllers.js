@@ -25,8 +25,7 @@ exports.readUsers = async (request, response) => {
     const usersList = await User.findAll({
       attributes:[ "id", "username", "email" ], 
       include:[ 
-        { model:Project, attributes:["id", "projectName", "themeName"] }, 
-        { model:Note, attributes:["id", "noteTitle", "noteContent"] } 
+        { model:Project, attributes:["id", "projectName", "themeName"] }
       ]
     })
     response.status(200).send({user: usersList})
