@@ -28,6 +28,7 @@ exports.hashPass = async (request, response, next) => {
 
 // Compare the entered password to the hashed => Check if the token has been authenticated 
 exports.comparePass = async(request, response, next) => {
+  console.log("At comparing passwords")
   try {
     // Check if user has passed the token check 
     if(request.authUser){
