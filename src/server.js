@@ -14,6 +14,10 @@ const app = express();
 // Body Parsing
 app.use(express.json());
 
+// Include CORS
+const cors = require('cors')
+app.use(cors())
+
 // Routing
 const userRouter = require('./users/usersRoutes')
 const loginRouter = require('./login/loginRoutes')

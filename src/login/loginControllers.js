@@ -6,17 +6,18 @@ const jwt = require('jsonwebtoken')
 
 // Login User
 exports.loginUser = async (request, response) => {
+    console.log("At logging in")
   try {
       if(request.authUser){
           console.log("Token exists continue to login")
-          response.status(200).send({username: request.user.username})
+          response.status(200).send({userName: request.user.username})
       }else{
           const user = await User.findOne({
             where: {username: request.body.username}
           })
           const token = await jwt.sign({user_id: user.user_id}, process.env.SECRET)
           console.log("Token not passed, continue to login, generate new token")
-          response.status(200).send({username: user.username, token})
+          response.status(200).send({userName: user.username, id:user.id, token})
       }
   } catch (error) {
       console.log(error);
