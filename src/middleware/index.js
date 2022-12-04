@@ -56,7 +56,7 @@ exports.tokenCheck = async(request, response, next) => {
       if (request.header("Authorization")){
           const token = request.header("Authorization").replace("Bearer ", "")
           const decodedToken = await jwt.verify( token, process.env.SECRET )
-          console.log(decodedToken)
+          console.log("The decoded token is ", decodedToken)
           const user = await User.findOne({
             where : {id:decodedToken.id}
           })
