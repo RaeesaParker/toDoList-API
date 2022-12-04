@@ -10,7 +10,7 @@ exports.loginUser = async (request, response) => {
   try {
       if(request.authUser){
           console.log("Token exists continue to login")
-          response.status(200).send({userName: request.user.username})
+          response.status(200).send({userName: request.authUser.username, id: request.authUser.id})
       }else{
           const user = await User.findOne({
             where: {username: request.body.username}

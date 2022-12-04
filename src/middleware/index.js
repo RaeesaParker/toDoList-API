@@ -32,22 +32,17 @@ exports.comparePass = async(request, response, next) => {
   try {
     // Check if user has passed the token check 
     if(request.authUser){
-      request.user = await User.findOne({
-        where: {username: request.authUser.username}
-      })
+      request.authUser = await User.findOne({where: {username: request.authUser.username}});
+      console.log("The requested User is ", request.authUser)
+      next()
     }else{
-      request.user = await User.findOne({
-        where: {username: request.body.username}
-      })
-    }
-
-    // Check the password matches
-    if (request.user && await bcrypt.compare(request.body.password, request.user.password)){
+      request.user = await User.findOne({ where: {username: request.body.username}})
+      if (request.user && await bcrypt.compare(request.body.password, request.user.password)){
         next()
-    }else{
-        throw new Error("Incorrect username or password")
-    } 
-
+      }else{
+          throw new Error("Incorrect username or password")
+      } 
+    }
   } catch (error) {
       console.log(error)
       response.status(500).send({error: error.message})
