@@ -16,7 +16,7 @@ projectRouter.get('/projects', readProjects)
 // Get one project
 projectRouter.get('/projects/:id', readOneProject)
 
-// Get all projects of a project
+// Get all projects of a user
 projectRouter.get('/user/:id/projects', tokenCheck,  readUserProjects)
 
 // Delete Project
