@@ -8,8 +8,12 @@ const Project = require("../projects/projectsModels");
 // Create new note
 exports.createNote = async (request, response) => {
   try {
-    // Put the authenticated user id in the request.body => Put project id into request.body
-    request.body.userId = request.authUser.id
+    if (request.authUser){
+      // Put the authenticated user id in the request.body
+      request.body.userId = request.authUser.id
+    }else{
+      request.body.userId = request.body.user_id
+    }
     request.body.projectId = request.params.id
 
     // Check that the project belongs to the user 
