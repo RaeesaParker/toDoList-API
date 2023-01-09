@@ -75,7 +75,7 @@ exports.readProjectNotes = async (request, response) => {
     const projectNotesList = await Note.findAll({
       where: {ProjectId: request.params.id}
     })
-    response.status(200).send({note: projectNotesList})
+    response.status(200).send(projectNotesList)
   } catch (error) {
     console.log(error);
     response.status(500).send({error: error.message});
