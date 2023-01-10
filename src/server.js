@@ -16,7 +16,7 @@ app.use(express.json());
 
 // Include CORS
 const cors = require('cors')
-app.use(cors())
+app.use(cors({ origin: "*" }))
 
 // Routing
 const userRouter = require('./users/usersRoutes')

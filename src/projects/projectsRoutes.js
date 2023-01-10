@@ -14,13 +14,13 @@ projectRouter.post('/newProject', tokenCheck,  createProject);
 projectRouter.get('/projects', readProjects)
 
 // Get one project
-projectRouter.get('/projects/:id', readOneProject)
+projectRouter.get('/projects/:id', tokenCheck,  readOneProject)
 
 // Get all projects of a user
 projectRouter.get('/user/:id/projects', tokenCheck,  readUserProjects)
 
 // Delete Project
-projectRouter.delete('/projects/:id', deleteProject)
+projectRouter.delete('/projects/:id', tokenCheck, deleteProject)
 
 
 module.exports = projectRouter;
