@@ -55,7 +55,7 @@ exports.createNote = async (request, response) => {
     // Add the note to the project 
     loadedProject.addNote(newNote)
 
-    response.status(201).send({ notetName: newNote.noteTitle, id:newNote.id  });
+    response.status(201).send({ id:newNote.id, notetTitle: newNote.noteTitle, noteContent:newNote.noteContent   });
     
   } catch (error) {
     console.log(error);
@@ -122,6 +122,7 @@ exports.updateNote = async (request, response) => {
 exports.deleteNote = async (request, response) => {
   try {
     if (request.authUser){
+      console.log("INSIDE THE DELETE NOTE FUNCTION")
       await Note.destroy({where: {id: request.params.id}})
       response.status(200).send({message: "successfully deleted a note"})
     }else{
