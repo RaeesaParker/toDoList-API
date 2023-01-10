@@ -12,8 +12,12 @@ exports.createNote = async (request, response) => {
       // Put the authenticated user id in the request.body
       request.body.userId = request.authUser.id
     }else{
-      request.body.userId = request.body.user_id
+      response.status(401).send({
+        status: "Not authorized, login required",
+      });
+      return;
     }
+
     request.body.projectId = request.params.id
 
     // Check that the project belongs to the user 
@@ -76,10 +80,17 @@ exports.readNotes = async (request, response) => {
 // Get a list of the notes from one project
 exports.readProjectNotes = async (request, response) => {
   try {
-    const projectNotesList = await Note.findAll({
+    if (request.authUser){
+      const projectNotesList = await Note.findAll({
       where: {ProjectId: request.params.id}
-    })
-    response.status(200).send(projectNotesList)
+      })
+      response.status(200).send(projectNotesList)
+    }else{
+      response.status(401).send({
+        status: "Not authorized, login required",
+      });
+      return;
+    }
   } catch (error) {
     console.log(error);
     response.status(500).send({error: error.message});
@@ -90,13 +101,15 @@ exports.readProjectNotes = async (request, response) => {
 // Update note => changing the noteBin    1 = To Do     2 = Doing     3 = Done
 exports.updateNote = async (request, response) => {
   try {
-    await Note.update(
-      request.body,
-      { where: 
-        { id: request.params.noteId }
-      }
-    );
-    response.status(200).send({message: "noteBin field has been updated"})
+    if (request.authUser){
+      await Note.update(request.body, { where: { id: request.params.noteId }});
+      response.status(200).send({message: "noteBin field has been updated"})
+    }else{
+      response.status(401).send({
+        status: "Not authorized, login required",
+      });
+      return;
+    }
   } catch (error) {
     console.log(error);
     response.status(500).send({error: error.message});
@@ -108,10 +121,15 @@ exports.updateNote = async (request, response) => {
 // Delete Note
 exports.deleteNote = async (request, response) => {
   try {
-      await Note.destroy({
-        where: {id: request.params.id}
-      })
+    if (request.authUser){
+      await Note.destroy({where: {id: request.params.id}})
       response.status(200).send({message: "successfully deleted a note"})
+    }else{
+      response.status(401).send({
+        status: "Not authorized, login required",
+      });
+      return;
+    }
   } catch (error) {
       console.log(error);
       response.status(500).send({error: error.message});
