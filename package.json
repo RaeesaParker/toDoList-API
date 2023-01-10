@@ -4,6 +4,7 @@
   "description": "Express backend for React to do list front. Connected to SQL db",
   "main": "index.js",
   "scripts": {
+    "start": "node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
