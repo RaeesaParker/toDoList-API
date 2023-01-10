@@ -102,6 +102,7 @@ exports.readProjectNotes = async (request, response) => {
 exports.updateNote = async (request, response) => {
   try {
     if (request.authUser){
+      console.log("INSIDE THE UPDATE NOTE")
       await Note.update(request.body, { where: { id: request.params.noteId }});
       response.status(200).send({message: "noteBin field has been updated"})
     }else{
@@ -122,7 +123,6 @@ exports.updateNote = async (request, response) => {
 exports.deleteNote = async (request, response) => {
   try {
     if (request.authUser){
-      console.log("INSIDE THE DELETE NOTE FUNCTION")
       await Note.destroy({where: {id: request.params.id}})
       response.status(200).send({message: "successfully deleted a note"})
     }else{
