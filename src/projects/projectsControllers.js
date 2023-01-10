@@ -10,7 +10,10 @@ exports.createProject = async (request, response) => {
       // Put the authenticated user id in the request.body
       request.body.userId = request.authUser.id
     }else{
-      request.body.userId = request.body.user_id
+      response.status(401).send({
+        status: "Not authorized, login required",
+      });
+      return;
     }
 
     // Build project 
@@ -65,10 +68,18 @@ exports.readProjects = async (request, response) => {
 // Get one project
 exports.readOneProject = async (request, response) => {
   try {
+    if (request.authUser){
+      // Put the authenticated user id in the request.body
+      request.body.userId = request.authUser.id
+    }else{
+      response.status(401).send({
+        status: "Not authorized, login required",
+      });
+      return;
+    }
     const projectsList = await Project.findOne({
       where: {id: request.params.id}
     })
-    console.log(projectsList)
     response.status(200).send({projectName: projectsList.projectName, themeName:projectsList.themeName, id:projectsList.id})
   } catch (error) {
     console.log(error);
@@ -80,10 +91,18 @@ exports.readOneProject = async (request, response) => {
 // Get all projects of a user
 exports.readUserProjects = async (request, response) => {
   try {
+    if (request.authUser){
+      // Put the authenticated user id in the request.body
+      request.body.userId = request.authUser.id
+    }else{
+      response.status(401).send({
+        status: "Not authorized, login required",
+      });
+      return;
+    }
     const projectsList = await Project.findAll({
-      where: {UserId: request.params.id}
+      where: {UserId: request.body.userId}
     })
-    console.log(projectsList)
     response.status(200).send(projectsList)
   } catch (error) {
     console.log(error);
@@ -95,12 +114,19 @@ exports.readUserProjects = async (request, response) => {
 // Delete Project
 exports.deleteProject = async (request, response) => {
   try {
-      await Project.destroy({
-        where: {id: request.params.id}
-      })
-      response.status(200).send({message: "successfully deleted a project"})
+    if (request.authUser){
+      // Put the authenticated user id in the request.body
+      request.body.userId = request.authUser.id
+    }else{
+      response.status(401).send({
+        status: "Not authorized, login required",
+      });
+      return;
+    }
+    await Project.destroy({where: {id: request.params.id}})
+    response.status(200).send({message: "successfully deleted a project"})
   } catch (error) {
-      console.log(error);
-      response.status(500).send({error: error.message});
+    console.log(error);
+    response.status(500).send({error: error.message});
   }
 }

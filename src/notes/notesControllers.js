@@ -8,8 +8,12 @@ const Project = require("../projects/projectsModels");
 // Create new note
 exports.createNote = async (request, response) => {
   try {
-    // Put the authenticated user id in the request.body => Put project id into request.body
-    request.body.userId = request.authUser.id
+    if (request.authUser){
+      // Put the authenticated user id in the request.body
+      request.body.userId = request.authUser.id
+    }else{
+      request.body.userId = request.body.user_id
+    }
     request.body.projectId = request.params.id
 
     // Check that the project belongs to the user 
@@ -75,7 +79,7 @@ exports.readProjectNotes = async (request, response) => {
     const projectNotesList = await Note.findAll({
       where: {ProjectId: request.params.id}
     })
-    response.status(200).send({note: projectNotesList})
+    response.status(200).send(projectNotesList)
   } catch (error) {
     console.log(error);
     response.status(500).send({error: error.message});

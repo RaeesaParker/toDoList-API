@@ -53,20 +53,22 @@ exports.comparePass = async(request, response, next) => {
 // Set Token Checking => If an authorization bearer token is passed => decode it => find a user with that ID => compare request.body with token data
 exports.tokenCheck = async(request, response, next) => {
   try {
-      if (request.header("Authorization")){
-          const token = request.header("Authorization").replace("Bearer ", "")
-          const decodedToken = await jwt.verify( token, process.env.SECRET )
-          console.log("The decoded token is ", decodedToken)
-          const user = await User.findOne({
-            where : {id:decodedToken.id}
-          })
+    if (request.header("Authorization")){
 
-          request.authUser = user
-          console.log("Headers passed")
-      }else{
-          console.log("No headers passed")
-      }
+      const token = request.header("Authorization").replace("Bearer ", "")
+      const decodedToken = await jwt.verify( token, process.env.SECRET )
+      console.log("The decoded token is ", decodedToken)
+      const user = await User.findOne({ where : {id:decodedToken.id}})
+      request.authUser = user
+      console.log("User is authenticated")
       next()
+
+    }else{
+      response.status(401).send({
+        status: "Not authorized, login required",
+      });
+      return;
+    }
   } catch (error) {
       console.log(error)
       response.status(500).send({error: error.message}) 

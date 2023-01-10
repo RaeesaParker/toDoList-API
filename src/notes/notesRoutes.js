@@ -3,7 +3,7 @@ const { tokenCheck } = require("../middleware");
 const { createNote, readNotes, readProjectNotes, updateNote, deleteNote} = require("./notesControllers");
 
 
-// User router
+// Notes router
 const noteRouter = Router();
 
 // Create Note
