@@ -6,7 +6,7 @@ const { comparePass, tokenCheck} = require("../middleware/index")
 const loginRouter = Router();
 
 // Login User
-loginRouter.post('/auth', tokenCheck, comparePass, loginUser)
+loginRouter.post('/auth', comparePass, loginUser)
 
 
 
