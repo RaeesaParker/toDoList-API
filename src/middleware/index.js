@@ -54,7 +54,6 @@ exports.comparePass = async(request, response, next) => {
 exports.tokenCheck = async(request, response, next) => {
   try {
     if (request.header("Authorization")){
-
       const token = request.header("Authorization").replace("Bearer ", "")
       const decodedToken = await jwt.verify( token, process.env.SECRET )
       console.log("The decoded token is ", decodedToken)
