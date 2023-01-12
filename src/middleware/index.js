@@ -73,3 +73,34 @@ exports.tokenCheck = async(request, response, next) => {
       response.status(500).send({error: error.message}) 
   }
 }
+
+
+
+// Check for cookie value 
+
+exports.validPersistantToken = async (request, response) => {
+  try {
+    if (!request.body.token) {
+      response.status(401).send({ status: "No token supplied, not authorized, login required",});
+      return;
+    }
+
+    const token = request.body.token;
+    const decodedToken = await jwt.verify(token, process.env.SECRET);
+
+    // Check the user is valid =>  attempt to get a user
+    const user = await User.findOne({ where : {id:decodedToken.id}})
+
+    if (!user) { 
+      response.status(401).send({ status: "Not authorized, login required",});
+      return;
+    }
+
+    console.log("The decoded token is ", decodedToken);
+    response.status(200).send({ id: user.id, userName: user.username,});
+
+  } catch (error) {
+    console.log(error);
+    response.status(500).send({ error: error.message });
+  }
+};
