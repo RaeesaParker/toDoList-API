@@ -66,7 +66,6 @@ exports.deleteUser = async (request, response) => {
 // Update User
 exports.updateUser = async (request, response) => {
   try {
-    console.log("The the updating user. The request.body params are- ", request.body)
       await User.update(
           request.body,
           { where: 
