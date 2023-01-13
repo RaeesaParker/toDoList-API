@@ -1,6 +1,6 @@
 const { Router } = require ("express");
 const { createUser, readUsers, readOneUser, deleteUser, updateUser } = require("./usersControllers");
-const { hashPass } = require("../middleware/index")
+const { hashPass, tokenCheck} = require("../middleware/index")
 const { validateNewUser } = require('../middleware/validation')
 
 
@@ -17,10 +17,10 @@ userRouter.get('/users', readUsers)
 userRouter.get('/users/:id', readOneUser)
 
 // Delete User
-userRouter.delete('/users/:id', deleteUser)
+userRouter.delete('/users/:id', tokenCheck,  deleteUser)
 
 // Update User details
-userRouter.put('/users/:id', updateUser) 
+userRouter.put('/users/:id', tokenCheck,  updateUser) 
 
 
 module.exports = userRouter;
