@@ -61,7 +61,6 @@ exports.tokenCheck = async(request, response, next) => {
       request.authUser = user
       console.log("User is authenticated")
       next()
-
     }else{
       response.status(401).send({
         status: "Not authorized, login required",
@@ -77,7 +76,6 @@ exports.tokenCheck = async(request, response, next) => {
 
 
 // Check for cookie value 
-
 exports.validPersistantToken = async (request, response) => {
   try {
     if (!request.body.token) {
