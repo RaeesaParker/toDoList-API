@@ -66,13 +66,14 @@ exports.deleteUser = async (request, response) => {
 // Update User
 exports.updateUser = async (request, response) => {
   try {
-      await User.update(
-          request.body,
-          { where: 
-            { id: request.params.id }
-          }
-      );
-      response.status(200).send({message: "User field has been updated"})
+    await User.update(
+        request.body,
+        { where: 
+          { id: request.params.id }
+        }
+    );
+    const usersList = await User.findOne({where: {id: request.params.id}})
+    response.status(200).send({username: usersList.username, email:usersList.email, id:usersList.id })
   } catch (error) {
       console.log(error);
       response.status(500).send({error: error.message});
