@@ -29,16 +29,6 @@ app.use(userRouter, loginRouter, projectRouter, noteRouter);
 // Set up port
 const port = process.env.PORT || 5001;
 
-
-// health manager route
-app.get("/health", (request, response) => {
-    response
-        .status(200)
-        .send({ message: "API is working" });
-});
-
-
-
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });

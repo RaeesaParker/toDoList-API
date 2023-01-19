@@ -16,6 +16,11 @@ exports.hashPass = async (request, response, next) => {
       }
       next() 
     }else{
+      // Catch missing password
+      if (!request.body.password){
+        response.status(500).send({error: "a password is required",});
+        return;
+      }
       request.body.password = await bcrypt.hash(request.body.password, saltRounds)
       next()
     }
@@ -95,7 +100,7 @@ exports.validPersistantToken = async (request, response) => {
     }
 
     console.log("The decoded token is ", decodedToken);
-    response.status(200).send({ id: user.id, userName: user.username,});
+    response.status(200).send({ id: user.id, userName: user.username, email:user.email});
 
   } catch (error) {
     console.log(error);
